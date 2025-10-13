@@ -19,7 +19,7 @@ const StepThree: React.FC<StepProps> = ({
   };
 
   return (
-    <form onSubmit={handleNext} className="space-y-4">
+    <form onSubmit={handleNext} className="space-y-4 text-white">
       <h2 className="text-2xl font-semibold mb-4 text-center">Bank Details</h2>
 
       {/* Bank */}

@@ -38,7 +38,7 @@ const StepTwo: React.FC<StepProps> = ({
   };
 
   return (
-    <form onSubmit={handleNext} className="max-w-xl mx-auto">
+    <form onSubmit={handleNext} className="text-white max-w-xl mx-auto">
       <h2 className="text-2xl font-semibold mb-6 text-center">
         Identity Verification
       </h2>

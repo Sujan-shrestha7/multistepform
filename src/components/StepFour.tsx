@@ -13,10 +13,14 @@ const StepFour: React.FC<StepProps> = ({ prevStep, values, handleSubmit }) => {
         Confirm Details
       </h2>
       <div className="bg-gray-100 p-4 rounded mb-4">
-        <p><strong>Name:</strong> {values.name}</p>
+        <p><strong>Name:</strong> {values.fullName}</p>
         <p><strong>Email:</strong> {values.email}</p>
-        <p><strong>Address:</strong> {values.address}</p>
-        <p><strong>City:</strong> {values.city}</p>
+        <p><strong>Address:</strong></p>
+        <p><strong>Bank Details:</strong>
+        <p>Bank: {values.bank}</p>
+        <p>Branch: {values.accountNumber}</p>
+        <p>Account Type: {values.branch}</p>
+        <p>Account Number: {values.accountType}</p></p>
       </div>
 
       <div className="flex justify-between">

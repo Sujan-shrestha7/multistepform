@@ -43,7 +43,7 @@ const MultiStepForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-[white] p-8 rounded-2xl shadow-lg w-[95%] md:w-[600px] mx-auto mt-8">
+    <div className="bg-transparent p-8 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] w-[95%] md:w-[700px] mx-auto my-[70px]">
       {/* Step Indicator */}
       <div className="flex justify-between mb-6">
         {[1, 2, 3, 4].map((num) => (
