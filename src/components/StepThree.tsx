@@ -18,6 +18,68 @@ const StepThree: React.FC<StepProps> = ({
     nextStep();
   };
 
+  // ✅ Branches by bank
+  const branchesByBank: Record<string, string[]> = {
+    "Nabil Bank": [
+      "Durbarmarg",
+      "Banepa",
+      "New Baneshwor",
+      "Lazimpat",
+      "Patan",
+      "Biratnagar",
+      "Pokhara",
+      "Butwal",
+      "Nepalgunj",
+    ],
+    "Global IME Bank": [
+      "Kamaladi",
+      "Banepa",
+      "Dhulikhel",
+      "Itahari",
+      "Biratnagar",
+      "Pokhara",
+      "Chitwan",
+      "Lalitpur",
+      "Kathmandu",
+    ],
+    "NMB Bank": [
+      "Babarmahal",
+      "Kamalpokhari",
+      "Banepa",
+      "Panauti",
+      "Thamel",
+      "Birgunj",
+      "Hetauda",
+      "Pokhara",
+      "Biratnagar",
+    ],
+    "NIC Asia Bank": [
+      "Thapathali",
+      "Banepa",
+      "Dhulikhel",
+      "Patan",
+      "Gongabu",
+      "Itahari",
+      "Pokhara",
+      "Birgunj",
+      "Biratnagar",
+    ],
+    "Siddhartha Bank": [
+      "Tinkune",
+      "Banepa",
+      "Kumaripati",
+      "Pokhara",
+      "Birgunj",
+      "Itahari",
+      "Chitwan",
+      "Dhangadhi",
+      "Biratnagar",
+    ],
+  };
+
+  // Branch options based on selected bank
+  const branchOptions = values.bank ? branchesByBank[values.bank] || [] : [];
+
   return (
     <form onSubmit={handleNext} className="space-y-4 text-white">
       <h2 className="text-2xl font-semibold mb-4 text-center">Bank Details</h2>
@@ -33,12 +95,12 @@ const StepThree: React.FC<StepProps> = ({
           className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         >
-          <option value="">Select Account</option>
-          <option value="Nabil Bank">Nabil Bank</option>
-          <option value="Global IME Bank">Global IME Bank</option>
-          <option value="NMB Bank">NMB Bank</option>
-          <option value="NIC Asia Bank">NIC Asia Bank</option>
-          <option value="Siddhartha Bank">Siddhartha Bank</option>
+          <option className="bg-[#000000]" value="">Select Bank</option>
+          <option className="bg-[#000000]" value="Nabil Bank">Nabil Bank</option>
+          <option className="bg-[#000000]" value="Global IME Bank">Global IME Bank</option>
+          <option className="bg-[#000000]" value="NMB Bank">NMB Bank</option>
+          <option className="bg-[#000000]" value="NIC Asia Bank">NIC Asia Bank</option>
+          <option className="bg-[#000000]" value="Siddhartha Bank">Siddhartha Bank</option>
         </select>
       </div>
 
@@ -51,15 +113,20 @@ const StepThree: React.FC<StepProps> = ({
           <select
             value={values.branch || ""}
             onChange={(e) => handleChange("branch", e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={!values.bank}
+            className={`w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 ${
+              values.bank
+                ? "focus:ring-blue-500"
+                : "bg-transparent cursor-not-allowed"
+            }`}
             required
           >
             <option value="">Select Branch</option>
-            <option value="Kathmandu">Kathmandu</option>
-            <option value="Lalitpur">Lalitpur</option>
-            <option value="Bhaktapur">Bhaktapur</option>
-            <option value="Pokhara">Pokhara</option>
-            <option value="Biratnagar">Biratnagar</option>
+            {branchOptions.map((branch) => (
+              <option key={branch} value={branch}>
+                {branch}
+              </option>
+            ))}
           </select>
         </div>
 
