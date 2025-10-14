@@ -8,10 +8,6 @@ interface StepProps {
 
 const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
   const [errors, setErrors] = useState("");
-  const [province, setProvince] = useState<string>("");
-  const [municipality, setMunicipality] = useState<string>("");
-  const [district, setDistrict] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
 
   const areasOfExpertise = {
     "IT Technicians": [
@@ -28,6 +24,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       "Car Repairing (4-wheeler)",
       "Bus/ Truck Repairing",
       "JCB/ Excavator Repairing",
+      "4-Wheeler Driving"
     ],
     "Home Appliances": [
       "House Wiring",
@@ -998,7 +995,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       />
 
       {/* Address Section */}
-      <h3 className="text-lg font-semibold mt-6 mb-2">Address</h3>
+      <h3 className="text-lg font-semibold mt-6 mb-2">Address <span className="text-red-500">*</span></h3>
       <div className="flex flex-wrap gap-[25px] gap-y-[20px] justify-between">
         {/* Province + District */}
         <div className="flex flex-wrap gap-[30px] gap-y-[15px] justify-between">
@@ -1006,9 +1003,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
           <select
             value={values.province}
             onChange={(e) => {
-              handleChange("province",e.target.value);
-              setDistrict("");
-              setMunicipality("");
+              handleChange("province", e.target.value);
             }}
             className="text-[16px] text-[#fff] py-2 px-3 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
           >
@@ -1030,14 +1025,13 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
           <select
             value={values.district}
             onChange={(e) => {
-              handleChange("district",e.target.value);
-              setMunicipality("");
+              handleChange("district", e.target.value);
             }}
             className="text-[16px] text-[#fff] py-2 px-3 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             disabled={!values.province}
           >
             <option className="bg-[#000000]" value="">
-              {province ? "Select District" : "Select Province First"}
+              {values.province ? "Select District" : "Select Province First"}
             </option>
             {provinces
               .find((p) => p.name === values.province)
@@ -1053,13 +1047,17 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
         <div className="flex flex-wrap gap-[30px] gap-y-[15px] justify-between">
           {/* Municipality Dropdown */}
           <select
-            value={municipality}
-            onChange={(e) => setMunicipality(e.target.value)}
+            value={values.municipality}
+            onChange={(e) => {
+              handleChange("municipality", e.target.value);
+            }}
             className="text-[16px] text-[#fff] py-2 px-3 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             disabled={!values.district}
           >
             <option className="bg-[#000000]" value="">
-              {values.district ? "Select Municipality" : "Select District First"}
+              {values.district
+                ? "Select Municipality"
+                : "Select District First"}
             </option>
             {(municipalitiesData[values.district] || []).map((m) => (
               <option className="bg-[#000000] text-[#fff]" key={m} value={m}>
@@ -1073,8 +1071,10 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
             type="text"
             placeholder="Ward No / Tole / House No..."
             className="text-[#fff] text-[14px] pl-[10px] py-2 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={values.tole}
+            onChange={(e) => {
+              handleChange("tole", e.target.value);
+            }}
           />
         </div>
       </div>

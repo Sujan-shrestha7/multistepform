@@ -1,4 +1,3 @@
-import React from "react";
 import MultiStepForm from "./components/MultiStepForm";
 import Header from "./components/Header";
 import itech from "./images/itech.jpg";
@@ -8,7 +7,7 @@ function App() {
     <div>
       <Header />
       <div>
-        <img className="w-full" src={itech} alt="" />
+        <img className="w-full md:mt-[80px] mt-[100px]" src={itech} alt="" />
       </div>
       <div className="flex bg-[#22073F] items-center justify-center min-h-screen">
         <MultiStepForm />

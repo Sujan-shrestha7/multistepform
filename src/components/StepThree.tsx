@@ -18,67 +18,86 @@ const StepThree: React.FC<StepProps> = ({
     nextStep();
   };
 
-  // ✅ Branches by bank
-  const branchesByBank: Record<string, string[]> = {
-    "Nabil Bank": [
-      "Durbarmarg",
-      "Banepa",
-      "New Baneshwor",
-      "Lazimpat",
-      "Patan",
-      "Biratnagar",
-      "Pokhara",
-      "Butwal",
-      "Nepalgunj",
-    ],
-    "Global IME Bank": [
-      "Kamaladi",
-      "Banepa",
-      "Dhulikhel",
-      "Itahari",
-      "Biratnagar",
-      "Pokhara",
-      "Chitwan",
-      "Lalitpur",
-      "Kathmandu",
-    ],
-    "NMB Bank": [
-      "Babarmahal",
-      "Kamalpokhari",
-      "Banepa",
-      "Panauti",
-      "Thamel",
-      "Birgunj",
-      "Hetauda",
-      "Pokhara",
-      "Biratnagar",
-    ],
-    "NIC Asia Bank": [
-      "Thapathali",
-      "Banepa",
-      "Dhulikhel",
-      "Patan",
-      "Gongabu",
-      "Itahari",
-      "Pokhara",
-      "Birgunj",
-      "Biratnagar",
-    ],
-    "Siddhartha Bank": [
-      "Tinkune",
-      "Banepa",
-      "Kumaripati",
-      "Pokhara",
-      "Birgunj",
-      "Itahari",
-      "Chitwan",
-      "Dhangadhi",
-      "Biratnagar",
-    ],
-  };
+  // ✅ Banks array with branches
+  const banks = [
+    {
+      name: "Nabil Bank",
+      branches: [
+        "Durbarmarg",
+        "Banepa",
+        "New Baneshwor",
+        "Lazimpat",
+        "Patan",
+        "Biratnagar",
+        "Pokhara",
+        "Butwal",
+        "Nepalgunj",
+      ],
+    },
+    {
+      name: "Global IME Bank",
+      branches: [
+        "Kamaladi",
+        "Banepa",
+        "Dhulikhel",
+        "Itahari",
+        "Biratnagar",
+        "Pokhara",
+        "Chitwan",
+        "Lalitpur",
+        "Kathmandu",
+      ],
+    },
+    {
+      name: "NMB Bank",
+      branches: [
+        "Babarmahal",
+        "Kamalpokhari",
+        "Banepa",
+        "Panauti",
+        "Thamel",
+        "Birgunj",
+        "Hetauda",
+        "Pokhara",
+        "Biratnagar",
+      ],
+    },
+    {
+      name: "NIC Asia Bank",
+      branches: [
+        "Thapathali",
+        "Banepa",
+        "Dhulikhel",
+        "Patan",
+        "Gongabu",
+        "Itahari",
+        "Pokhara",
+        "Birgunj",
+        "Biratnagar",
+      ],
+    },
+    {
+      name: "Siddhartha Bank",
+      branches: [
+        "Tinkune",
+        "Banepa",
+        "Kumaripati",
+        "Pokhara",
+        "Birgunj",
+        "Itahari",
+        "Chitwan",
+        "Dhangadhi",
+        "Biratnagar",
+      ],
+    },
+  ];
 
-  // Branch options based on selected bank
-  const branchOptions = values.bank ? branchesByBank[values.bank] || [] : [];
+  // ✅ Find selected bank and branches
+  const selectedBank = banks.find((b) => b.name === values.bank);
+  const branchOptions = selectedBank ? selectedBank.branches : [];
+
+  // ✅ Account types array
+  const accountTypes = ["Saving", "Current", "Salary", "Fixed Deposit"];
 
   return (
     <form onSubmit={handleNext} className="space-y-4 text-white">
@@ -95,17 +114,20 @@ const StepThree: React.FC<StepProps> = ({
           className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         >
-          <option className="bg-[#000000]" value="">Select Bank</option>
-          <option className="bg-[#000000]" value="Nabil Bank">Nabil Bank</option>
-          <option className="bg-[#000000]" value="Global IME Bank">Global IME Bank</option>
-          <option className="bg-[#000000]" value="NMB Bank">NMB Bank</option>
-          <option className="bg-[#000000]" value="NIC Asia Bank">NIC Asia Bank</option>
-          <option className="bg-[#000000]" value="Siddhartha Bank">Siddhartha Bank</option>
+          <option className="bg-[#000000]" value="">
+            Select Bank
+          </option>
+          {banks.map((bank) => (
+            <option key={bank.name} className="bg-[#000000]" value={bank.name}>
+              {bank.name}
+            </option>
+          ))}
         </select>
       </div>
 
       {/* Branch + Account Type */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Branch */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Branch <span className="text-red-500">*</span>
@@ -123,13 +145,14 @@ const StepThree: React.FC<StepProps> = ({
           >
             <option value="">Select Branch</option>
             {branchOptions.map((branch) => (
-              <option key={branch} value={branch}>
+              <option className="bg-[#000000]" key={branch} value={branch}>
                 {branch}
               </option>
             ))}
           </select>
         </div>
 
+        {/* Account Type */}
         <div>
           <label className="block text-sm font-medium mb-1">
             Account Type <span className="text-red-500">*</span>
@@ -141,10 +164,11 @@ const StepThree: React.FC<StepProps> = ({
             required
           >
             <option value="">Select Type</option>
-            <option value="Saving">Saving</option>
-            <option value="Current">Current</option>
-            <option value="Salary">Salary</option>
-            <option value="Fixed Deposit">Fixed Deposit</option>
+            {accountTypes.map((type) => (
+              <option className="bg-[#000000]" key={type} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
         </div>
       </div>

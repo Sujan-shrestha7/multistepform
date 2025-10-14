@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface StepProps {
   nextStep: () => void;
@@ -14,28 +14,64 @@ const StepTwo: React.FC<StepProps> = ({
   values,
 }) => {
   const [preview, setPreview] = useState<any>({
-    citizenshipFront: values.citizenshipFront || "",
-    citizenshipBack: values.citizenshipBack || "",
-    licensePhoto: values.licensePhoto || "",
-    panPhoto: values.panPhoto || "",
-    personalPhoto: values.personalPhoto || "",
+    citizenshipFront: values.citizenshipFrontPreview || "",
+    citizenshipBack: values.citizenshipBackPreview || "",
+    licensePhoto: values.licensePhotoPreview || "",
+    panPhoto: values.panPhotoPreview || "",
+    personalPhoto: values.personalPhotoPreview || "",
   });
 
+  // Handle file uploads + Base64 preview generation
   const handleFileUpload = (key: string, file: File | null) => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview((prev: any) => ({ ...prev, [key]: reader.result }));
+        const base64 = reader.result as string;
+
+        // Save file + base64 in parent state
         handleChange(key, file);
+        handleChange(`${key}Preview`, base64);
+
+        // Update local preview
+        setPreview((prev: any) => ({ ...prev, [key]: base64 }));
       };
       reader.readAsDataURL(file);
     }
   };
 
+  // Manual validation before moving to next step
   const handleNext = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Require personal photo
+    if (!values.personalPhoto && !values.personalPhotoPreview) {
+      alert("Please upload your personal photo before continuing.");
+      return;
+    }
+
+    // Require citizenship front and back
+    if (!values.citizenshipFront && !values.citizenshipFrontPreview) {
+      alert("Please upload your citizenship front side.");
+      return;
+    }
+    if (!values.citizenshipBack && !values.citizenshipBackPreview) {
+      alert("Please upload your citizenship back side.");
+      return;
+    }
+
     nextStep();
   };
+
+  // Sync previews when returning from another step
+  useEffect(() => {
+    setPreview({
+      citizenshipFront: values.citizenshipFrontPreview || "",
+      citizenshipBack: values.citizenshipBackPreview || "",
+      licensePhoto: values.licensePhotoPreview || "",
+      panPhoto: values.panPhotoPreview || "",
+      personalPhoto: values.personalPhotoPreview || "",
+    });
+  }, [values]);
 
   return (
     <form onSubmit={handleNext} className="text-white max-w-xl mx-auto">
@@ -46,7 +82,7 @@ const StepTwo: React.FC<StepProps> = ({
       {/* Citizenship Front */}
       <div className="mb-4">
         <label className="block font-medium mb-1">
-          Upload Citizenship (Front Side)
+          Upload Citizenship (Front Side) <span className="text-red-500">*</span>
         </label>
         <input
           type="file"
@@ -55,7 +91,6 @@ const StepTwo: React.FC<StepProps> = ({
             handleFileUpload("citizenshipFront", e.target.files?.[0] || null)
           }
           className="w-full border p-2 rounded"
-          required
         />
         {preview.citizenshipFront && (
           <img
@@ -69,7 +104,7 @@ const StepTwo: React.FC<StepProps> = ({
       {/* Citizenship Back */}
       <div className="mb-4">
         <label className="block font-medium mb-1">
-          Upload Citizenship (Back Side)
+          Upload Citizenship (Back Side) <span className="text-red-500">*</span>
         </label>
         <input
           type="file"
@@ -78,7 +113,6 @@ const StepTwo: React.FC<StepProps> = ({
             handleFileUpload("citizenshipBack", e.target.files?.[0] || null)
           }
           className="w-full border p-2 rounded"
-          required
         />
         {preview.citizenshipBack && (
           <img
@@ -119,7 +153,7 @@ const StepTwo: React.FC<StepProps> = ({
           placeholder="Enter your PAN Number"
           value={values.panNo}
           onChange={(e) => handleChange("panNo", e.target.value)}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded text-white"
         />
       </div>
 
@@ -145,7 +179,9 @@ const StepTwo: React.FC<StepProps> = ({
 
       {/* Personal Photo */}
       <div className="mb-4">
-        <label className="block font-medium mb-1">Upload Personal Photo</label>
+        <label className="block font-medium mb-1">
+          Upload Personal Photo <span className="text-red-500">*</span>
+        </label>
         <input
           type="file"
           accept="image/*"
@@ -153,7 +189,6 @@ const StepTwo: React.FC<StepProps> = ({
             handleFileUpload("personalPhoto", e.target.files?.[0] || null)
           }
           className="w-full border p-2 rounded"
-          required
         />
         {preview.personalPhoto && (
           <img

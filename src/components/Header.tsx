@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "../images/Logo_Xittoo Sewa.png";
 
 const Header = () => {
@@ -6,7 +6,7 @@ const Header = () => {
 
   return (
     <header className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
-      <div className="flex items-center justify-around max-w-7xl mx-auto px-6 h-[80px]">
+      <div className="flex items-center justify-around max-w-7xl mx-auto px-6 h-[70px]">
         {/* Logo */}
         <img
           src={logo}
