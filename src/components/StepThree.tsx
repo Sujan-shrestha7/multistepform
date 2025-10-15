@@ -19,82 +19,51 @@ const StepThree: React.FC<StepProps> = ({
   };
 
   // ✅ Banks array with branches
-  const banks = [
-    {
-      name: "Nabil Bank",
-      branches: [
-        "Durbarmarg",
-        "Banepa",
-        "New Baneshwor",
-        "Lazimpat",
-        "Patan",
-        "Biratnagar",
-        "Pokhara",
-        "Butwal",
-        "Nepalgunj",
-      ],
-    },
-    {
-      name: "Global IME Bank",
-      branches: [
-        "Kamaladi",
-        "Banepa",
-        "Dhulikhel",
-        "Itahari",
-        "Biratnagar",
-        "Pokhara",
-        "Chitwan",
-        "Lalitpur",
-        "Kathmandu",
-      ],
-    },
-    {
-      name: "NMB Bank",
-      branches: [
-        "Babarmahal",
-        "Kamalpokhari",
-        "Banepa",
-        "Panauti",
-        "Thamel",
-        "Birgunj",
-        "Hetauda",
-        "Pokhara",
-        "Biratnagar",
-      ],
-    },
-    {
-      name: "NIC Asia Bank",
-      branches: [
-        "Thapathali",
-        "Banepa",
-        "Dhulikhel",
-        "Patan",
-        "Gongabu",
-        "Itahari",
-        "Pokhara",
-        "Birgunj",
-        "Biratnagar",
-      ],
-    },
-    {
-      name: "Siddhartha Bank",
-      branches: [
-        "Tinkune",
-        "Banepa",
-        "Kumaripati",
-        "Pokhara",
-        "Birgunj",
-        "Itahari",
-        "Chitwan",
-        "Dhangadhi",
-        "Biratnagar",
-      ],
-    },
+  const bankNames = [
+    "Nepal Rastra Bank",
+    "Nabil Bank",
+    "Nepal Investment Mega Bank",
+    "Global IME Bank",
+    "Nepal Bank Limited",
+    "Rastriya Banijya Bank",
+    "Standard Chartered Bank Nepal",
+    "Siddhartha Bank",
+    "Himalayan Bank",
+    "NIC Asia Bank",
+    "Machhapuchchhre Bank",
+    "Kumari Bank",
+    "NMB Bank",
+    "Everest Bank",
+    "Citizens Bank International",
+    "Sunrise Bank",
+    "Prime Commercial Bank",
+    "Sanima Bank",
+    "Laxmi Sunrise Bank",
+    "Civil Bank",
+    "Prabhu Bank",
+    "Century Commercial Bank",
+    "Agriculture Development Bank",
+    "Bank of Kathmandu",
+    "Mega Bank Nepal",
+    "Jyoti Bikas Bank",
+    "Garima Bikas Bank",
+    "Muktinath Bikas Bank",
+    "Shine Resunga Development Bank",
+    "Kailash Bikas Bank",
+    "Kamana Sewa Bikas Bank",
+    "Saptakoshi Development Bank",
+    "Lumbini Bikas Bank",
+    "ICFC Finance Limited",
+    "Goodwill Finance Limited",
+    "Pokhara Finance Limited",
+    "Janaki Finance Limited",
+    "Guheshwori Merchant Banking & Finance",
+    "Manjushree Finance Limited",
+    "Progressive Finance Limited",
+    "Shree Investment and Finance",
+    "Best Finance Company",
+    "Multipurpose Finance Company",
   ];
-
-  // ✅ Find selected bank and branches
-  const selectedBank = banks.find((b) => b.name === values.bank);
-  const branchOptions = selectedBank ? selectedBank.branches : [];
 
   // ✅ Account types array
   const accountTypes = ["Saving", "Current", "Salary", "Fixed Deposit"];
@@ -117,9 +86,9 @@ const StepThree: React.FC<StepProps> = ({
           <option className="bg-[#000000]" value="">
             Select Bank
           </option>
-          {banks.map((bank) => (
-            <option key={bank.name} className="bg-[#000000]" value={bank.name}>
-              {bank.name}
+          {bankNames.map((bank) => (
+            <option key={bank} className="bg-[#000000]" value={bank}>
+              {bank}
             </option>
           ))}
         </select>
@@ -132,24 +101,19 @@ const StepThree: React.FC<StepProps> = ({
           <label className="block text-sm font-medium mb-1">
             Branch <span className="text-red-500">*</span>
           </label>
-          <select
+          <input
+            type="text"
             value={values.branch || ""}
             onChange={(e) => handleChange("branch", e.target.value)}
             disabled={!values.bank}
+            placeholder="Enter Branch"
             className={`w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 ${
               values.bank
                 ? "focus:ring-blue-500"
                 : "bg-transparent cursor-not-allowed"
             }`}
             required
-          >
-            <option value="">Select Branch</option>
-            {branchOptions.map((branch) => (
-              <option className="bg-[#000000]" key={branch} value={branch}>
-                {branch}
-              </option>
-            ))}
-          </select>
+          />
         </div>
 
         {/* Account Type */}

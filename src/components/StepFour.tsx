@@ -36,9 +36,9 @@ const StepFour: React.FC<StepProps> = ({ prevStep, values, handleSubmit }) => {
           <strong>Bank Details:</strong>
           <div className="ml-[50px]">
             <p>Bank: {values.bank}</p>
-            <p>Branch: {values.accountNumber}</p>
-            <p>Account Type: {values.branch}</p>
-            <p>Account Number: {values.accountType}</p>
+            <p>Branch: {values.branch}</p>
+            <p>Account Type: {values.accountType}</p>
+            <p>Account Number: {values.accountNumber}</p>
           </div>
         </p>
         <p>
