@@ -79,7 +79,7 @@ const handleSubmit = async() => {
         formDataToSend.append("personalPhoto", formData.personalPhoto);
 
       // ✅ Send to your Django API
-      const res = await fetch("http://127.0.0.1:8000/worker/api/details/create/", {
+      const res = await fetch("https://xittoosewa.com/worker/api/details/create/", {
         method: "POST",
         body: formDataToSend,
       });
