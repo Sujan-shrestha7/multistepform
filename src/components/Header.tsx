@@ -1,8 +1,10 @@
 import { useState } from "react";
 import logo from "../images/Logo_Xittoo Sewa.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate =  useNavigate();
 
   return (
     <header className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
@@ -10,16 +12,17 @@ const Header = () => {
         {/* Logo */}
         <img
           src={logo}
+          onClick={()=> navigate("/")}
           alt="Xittoo Sewa Logo"
-          className="h-[40px] w-[220px] object-contain"
+          className="h-[40px] w-[220px] object-contain cursor-pointer"
         />
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex flex-row gap-10 text-gray-800 font-medium">
-          <button className="hover:text-[#10507a] cursor-pointer transition-colors">
+          <button onClick={()=> navigate("/")} className="hover:text-[#10507a] cursor-pointer transition-colors">
             Home
           </button>
-          <button className="hover:text-[#10507a] cursor-pointer transition-colors">
+          <button onClick={()=> navigate("/contactus")} className="hover:text-[#10507a] cursor-pointer transition-colors">
             Contact Us
           </button>
         </nav>
@@ -60,13 +63,13 @@ const Header = () => {
         <div className="md:hidden bg-white shadow-md border-t border-gray-100">
           <nav className="flex flex-col items-center py-4 space-y-3 text-gray-800 font-medium">
             <button
-              onClick={() => setMenuOpen(false)}
+            onClick={()=> navigate("/")}
               className="hover:text-[#10507a] transition-colors"
             >
               Home
             </button>
             <button
-              onClick={() => setMenuOpen(false)}
+            onClick={()=> navigate("/contactus")}
               className="hover:text-[#10507a] transition-colors"
             >
               Contact Us

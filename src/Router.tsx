@@ -1,19 +1,17 @@
-// import React from 'react'
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Stepper from './Stepper';
-// import Hello from './Hello';
-// const Router = () => {
-//   return (
-//     <div>
-//       
-//       <BrowserRouter>
-//         <Routes>
-//           <Route path="/" element={<Hello/>} />     
-//           <Route path="/test" element={<Stepper />} />          
-//         </Routes>
-//       </BrowserRouter>
-//     </div>
-//   )
-// }
-// 
-// export default Router;
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Contact from "./components/Contact";
+import Home from "./components/Home";
+
+const Router = () => {
+  return (
+    <BrowserRouter>
+      {/* Future Routes can be added here */}
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/contactus" element={<Contact/>} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default Router;
