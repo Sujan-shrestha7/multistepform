@@ -8,8 +8,7 @@ interface StepProps {
 
 const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
   const [errors, setErrors] = useState("");
-  const [experience, setExperience] = useState("");
-  const [institution, setInstitution] = useState("");
+  const [experience, setExperience] = useState(false);
   const [engaged, setEngaged] = useState("");
 
   const areasOfExpertise = {
@@ -63,7 +62,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       "Trainer",
       "Master of Ceremony",
     ],
-    "Health and Hygiene": ["Cleaner"]
+    "Health and Hygiene": ["Cleaner"],
   };
 
   const provinces = [
@@ -1117,77 +1116,37 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       ))}
       <label className="font-semibold text-[#fa6b0c]">Experience:</label>
       <div>
-        <label className="flex gap-[10px]">
-          <input
-            type="checkbox"
-            name="experience"
-            value="intern"
-            onChange={(e) => setExperience(e.target.value)}
-            required
-          />
-          Intern
-        </label>
-
-        {experience === "intern" && (
-          <div className="mt-2">
-            <label>Select Institution/ Organization:</label>
-            <select
-              className="border p-1 ml-2"
-              value={institution}
-              onChange={(e) => setInstitution(e.target.value)}
-              required={experience === "intern"}
-            >
-              <option className="bg-[#000000]" value="">Select institution/ Organization</option>
-              <option className="bg-[#000000]" value="college">Nepal Banepa Polytechnic Institute</option>
-              <option className="bg-[#000000]" value="university">Aabhash SACCOS</option>
-              <option className="bg-[#000000]" value="company">Gramin Bikash Multipurpose SACCOS</option>
-            </select>
-          </div>
-        )}
-      </div>
-      <br />
-      <div className="flex flex-col gap-y-[20px]">
-      <label className="font-semibold text-[#fa6b0c]">
-        Are you engaged from any Institute/ Organization?
+      <label className="flex gap-[10px]">
+        <input
+          type="checkbox"
+          name="experience"
+          checked={experience}
+          onChange={(e) => setExperience(e.target.checked)}
+        />
+        Intern
       </label>
 
-      {/* YES / NO */}
-      <div className="flex gap-[20px]">
-        <label className="flex gap-[8px] text-white">
-          <input
-            type="radio"
-            name="engaged"
-            value="yes"
-            onChange={(e) => setEngaged(e.target.value)}
-          />
-          Yes
-        </label>
-
-        <label className="flex gap-[8px] text-white">
-          <input
-            type="radio"
-            name="engaged"
-            value="no"
-            onChange={(e) => setEngaged(e.target.value)}
-          />
-          No
-        </label>
-      </div>
-
-      {/* 👇 Show only if YES */}
-      {engaged === "yes" && (
-        <div className="flex flex-col gap-y-[10px]">
-          
+      {/* ✅ Show only when checked */}
+      {experience && (
+        <div className="flex flex-col gap-y-[10px] mt-2">
           {/* Dropdown */}
           <select
             className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             value={values.institute || ""}
             onChange={(e) => handleChange("institute", e.target.value)}
           >
-              <option className="bg-[#000000]" value="">Select institution/ Organization</option>
-              <option className="bg-[#000000]" value="college">Nepal Banepa Polytechnic Institute</option>
-              <option className="bg-[#000000]" value="university">Aabhash SACCOS</option>
-              <option className="bg-[#000000]" value="company">Gramin Bikash Multipurpose SACCOS</option>
+            <option className="bg-[#000000]" value="">
+              Select institution/ Organization
+            </option>
+            <option className="bg-[#000000]" value="college">
+              Nepal Banepa Polytechnic Institute
+            </option>
+            <option className="bg-[#000000]" value="saccos1">
+              Aabhash SACCOS
+            </option>
+            <option className="bg-[#000000]" value="saccos2">
+              Gramin Bikash Multipurpose SACCOS
+            </option>
           </select>
 
           {/* Other input */}
@@ -1203,7 +1162,77 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
         </div>
       )}
     </div>
-     {errors && <p className="text-red-600 mb-3">{errors}</p>}
+      <br />
+      <div className="flex flex-col gap-y-[20px]">
+        <label className="font-semibold text-[#fa6b0c]">
+          Are you engaged from any Institute/ Organization?
+        </label>
+
+        {/* YES / NO */}
+        <div className="flex gap-4">
+          {/* YES BUTTON */}
+          <button
+            type="button"
+            onClick={() => setEngaged("yes")}
+            className={`px-4 py-1 rounded-md border transition ${
+              engaged === "yes"
+                ? "bg-green-500 text-white border-green-500"
+                : "bg-transparent text-white border-white"
+            }`}
+          >
+            Yes
+          </button>
+
+          {/* NO BUTTON */}
+          <button
+            type="button"
+            onClick={() => setEngaged("no")}
+            className={`px-4 py-1 rounded-md border transition ${
+              engaged === "no"
+                ? "bg-red-500 text-white border-red-500"
+                : "bg-transparent text-white border-white"
+            }`}
+          >
+            No
+          </button>
+        </div>
+
+        {/* 👇 Show only if YES */}
+        {engaged === "yes" && (
+          <div className="flex flex-col gap-y-[10px]">
+            {/* Dropdown */}
+            <select
+              className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              value={values.institute || ""}
+              onChange={(e) => handleChange("institute", e.target.value)}
+            >
+              <option className="bg-[#000000]" value="">
+                Select institution/ Organization
+              </option>
+              <option className="bg-[#000000]" value="college">
+                Nepal Banepa Polytechnic Institute
+              </option>
+              <option className="bg-[#000000]" value="university">
+                Aabhash SACCOS
+              </option>
+              <option className="bg-[#000000]" value="company">
+                Gramin Bikash Multipurpose SACCOS
+              </option>
+            </select>
+
+            {/* Other input */}
+            <input
+              type="text"
+              placeholder="Or write your institute name"
+              className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              value={values.extraSkills}
+              onChange={(e) => handleChange("extraSkills", e.target.value)}
+            />
+          </div>
+        )}
+      </div>
+      <br />
+      {errors && <p className="text-red-600 mb-3">{errors}</p>}
       <div className="flex flex-col gap-y-[20px]">
         <label className="font-semibold text-[#fa6b0c]" htmlFor="">
           Extra skills Not in the list but you have :
