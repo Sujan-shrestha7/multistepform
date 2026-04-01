@@ -16,6 +16,7 @@ const StepTwo: React.FC<StepProps> = ({
   const [preview, setPreview] = useState<any>({
     citizenshipFront: values.citizenshipFrontPreview || "",
     citizenshipBack: values.citizenshipBackPreview || "",
+    nidPhoto: values.nidPhotoPreview || "",
     licensePhoto: values.licensePhotoPreview || "",
     panPhoto: values.panPhotoPreview || "",
     personalPhoto: values.personalPhotoPreview || "",
@@ -67,6 +68,7 @@ const StepTwo: React.FC<StepProps> = ({
     setPreview({
       citizenshipFront: values.citizenshipFrontPreview || "",
       citizenshipBack: values.citizenshipBackPreview || "",
+      nidPhoto: values.nidPhotoPreview || "",
       licensePhoto: values.licensePhotoPreview || "",
       panPhoto: values.panPhotoPreview || "",
       personalPhoto: values.personalPhotoPreview || "",
@@ -82,7 +84,8 @@ const StepTwo: React.FC<StepProps> = ({
       {/* Citizenship Front */}
       <div className="mb-4">
         <label className="block font-medium mb-1">
-          Upload Citizenship (Front Side) <span className="text-red-500">*</span>
+          Upload Citizenship (Front Side){" "}
+          <span className="text-red-500">*</span>
         </label>
         <input
           type="file"
@@ -90,7 +93,7 @@ const StepTwo: React.FC<StepProps> = ({
           onChange={(e) =>
             handleFileUpload("citizenshipFront", e.target.files?.[0] || null)
           }
-          className="w-full border p-2 rounded"
+          className="w-full border text-gray-400 p-2 rounded"
         />
         {preview.citizenshipFront && (
           <img
@@ -112,12 +115,34 @@ const StepTwo: React.FC<StepProps> = ({
           onChange={(e) =>
             handleFileUpload("citizenshipBack", e.target.files?.[0] || null)
           }
-          className="w-full border p-2 rounded"
+          className="w-full border text-gray-400 p-2 rounded"
         />
         {preview.citizenshipBack && (
           <img
             src={preview.citizenshipBack}
             alt="Citizenship Back"
+            className="mt-2 h-40 w-full object-cover rounded shadow"
+          />
+        )}
+      </div>
+
+      {/* NID Photo */}
+      <div className="mb-4">
+        <label className="block font-medium mb-1">
+          Upload NID Photo
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) =>
+            handleFileUpload("nidPhoto", e.target.files?.[0] || null)
+          }
+          className="w-full text-gray-400 border p-2 rounded"
+        />
+        {preview.nidPhoto && (
+          <img
+            src={preview.nidPhoto}
+            alt="NID Photo"
             className="mt-2 h-40 w-full object-cover rounded shadow"
           />
         )}
@@ -134,7 +159,7 @@ const StepTwo: React.FC<StepProps> = ({
           onChange={(e) =>
             handleFileUpload("licensePhoto", e.target.files?.[0] || null)
           }
-          className="w-full border p-2 rounded"
+          className="w-full text-gray-400 border p-2 rounded"
         />
         {preview.licensePhoto && (
           <img
@@ -153,7 +178,7 @@ const StepTwo: React.FC<StepProps> = ({
           placeholder="Enter your PAN Number"
           value={values.panNo}
           onChange={(e) => handleChange("panNo", e.target.value)}
-          className="w-full border p-2 rounded text-white"
+          className="w-full border p-2 text-gray-400 rounded text-white"
         />
       </div>
 
@@ -166,7 +191,7 @@ const StepTwo: React.FC<StepProps> = ({
           onChange={(e) =>
             handleFileUpload("panPhoto", e.target.files?.[0] || null)
           }
-          className="w-full border p-2 rounded"
+          className="w-full border text-gray-400 p-2 rounded"
         />
         {preview.panPhoto && (
           <img
@@ -188,7 +213,7 @@ const StepTwo: React.FC<StepProps> = ({
           onChange={(e) =>
             handleFileUpload("personalPhoto", e.target.files?.[0] || null)
           }
-          className="w-full border p-2 rounded"
+          className="w-full border text-gray-400 p-2 rounded"
         />
         {preview.personalPhoto && (
           <img
@@ -204,7 +229,7 @@ const StepTwo: React.FC<StepProps> = ({
         <button
           type="button"
           onClick={prevStep}
-          className="bg-gray-400 text-white py-2 px-6 rounded hover:bg-gray-500"
+          className="border border-blue-600 text-blue-600 py-2 px-6 rounded hover:bg-blue-50"
         >
           Back
         </button>

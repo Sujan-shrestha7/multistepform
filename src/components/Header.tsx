@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../images/Logo_Xittoo Sewa.png";
+import logo from "../images/logo.png";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {

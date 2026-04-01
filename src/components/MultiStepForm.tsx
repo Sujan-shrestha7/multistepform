@@ -21,10 +21,12 @@ const MultiStepForm: React.FC = () => {
     accountNumber:"",
     accountType:"",
     expertise: [],
+    extraSkills: "",
 
     // Step 2: Identity Info
     citizenshipFront: null as File | null,
     citizenshipBack: null as File | null,
+    nidPhoto: null as File | null,
     licensePhoto: null as File | null,
     panNo: "",
     panPhoto: null as File | null,
@@ -61,6 +63,7 @@ const handleSubmit = async() => {
       formDataToSend.append("Links", "https://xittosewa.com"); // or your real link
       formDataToSend.append("Gears", "...");
       formDataToSend.append("panNo", formData.panNo);
+      formDataToSend.append("extraSkills", formData.extraSkills);
 
 
       // Handle array for expertise
@@ -71,6 +74,8 @@ const handleSubmit = async() => {
         formDataToSend.append("citizenshipFront", formData.citizenshipFront);
       if (formData.citizenshipBack)
         formDataToSend.append("citizenshipBack", formData.citizenshipBack);
+      if (formData.nidPhoto)
+        formDataToSend.append("nidphoto", formData.nidPhoto);
       if (formData.licensePhoto)
         formDataToSend.append("licensePhoto", formData.licensePhoto);
       if (formData.panPhoto)
@@ -79,11 +84,10 @@ const handleSubmit = async() => {
         formDataToSend.append("personalPhoto", formData.personalPhoto);
 
       // ✅ Send to your Django API
-      const res = await fetch("https://xittoosewa.com/worker/api/details/create/", {
+      const res = await fetch("http://127.0.0.1:8000/worker/api/details/create/", {
         method: "POST",
         body: formDataToSend,
       });
-
       if (!res.ok) {
         const errData = await res.json();
         console.error("❌ Error:", errData);
@@ -137,7 +141,6 @@ const handleSubmit = async() => {
            alert(` Gears: ${errData[' Gears']}`);
         }
 
-
         if(errData['bank']){
            alert(` bank: ${errData['bank']}`);
         }
@@ -176,29 +179,21 @@ const handleSubmit = async() => {
         accountNumber: "",
         accountType: "",
         expertise: [],
+        extraSkills:"",
 
         citizenshipFront: null,
         citizenshipBack: null,
+        nidPhoto: null,
         licensePhoto: null,
         panNo: "",
         panPhoto: null,
         personalPhoto: null,
-
-        // citizenshipFrontPreview: "",
-        // citizenshipBackPreview: "",
-        // licensePhotoPreview: "",
-        // panPhotoPreview: "",
-        // personalPhotoPreview: "",
       });
     } catch (err) {
       console.error("❌ Submit error:", err);
       alert("Something went wrong!");
     }
   };
-  // const handleSubmit = () => {
-  //   console.log("✅ Final Data:", formData);
-  //   alert("Form Submitted Successfully!");
-  // };
 
   return (
     <div className="bg-transparent p-8 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] w-[95%] md:w-[700px] mx-auto my-[70px]">
@@ -209,7 +204,7 @@ const handleSubmit = async() => {
             key={num}
             className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${
               step === num
-                ? "bg-blue-600"
+                ? "bg-[#fa6b0c]"
                 : num < step
                 ? "bg-green-500"
                 : "bg-gray-400"

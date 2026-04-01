@@ -8,6 +8,8 @@ interface StepProps {
 
 const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
   const [errors, setErrors] = useState("");
+  const [experience, setExperience] = useState("");
+  const [institution, setInstitution] = useState("");
 
   const areasOfExpertise = {
     "IT Technicians": [
@@ -24,9 +26,10 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       "Car Repairing (4-wheeler)",
       "Bus/ Truck Repairing",
       "JCB/ Excavator Repairing",
-      "4-Wheeler Driving"
+      "4-Wheeler Driver",
     ],
     "Home Appliances": [
+      "Electrician",
       "House Wiring",
       "Vacuum Cleaning",
       "Mixture Technician",
@@ -56,7 +59,12 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       "Home Tuition",
       "IELTS Facilitator",
       "PTE Facilitator",
+      "Trainer",
+      "Master of Ceremony",
     ],
+    "Health and Hygiene": ["Cleaner"],
+
+    Recommended: ["Intern"],
   };
 
   const provinces = [
@@ -941,7 +949,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
     if (selected.includes(expertise)) {
       handleChange(
         "expertise",
-        selected.filter((item: string) => item !== expertise)
+        selected.filter((item: string) => item !== expertise),
       );
     } else {
       handleChange("expertise", [...selected, expertise]);
@@ -969,7 +977,12 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
         type="text"
         placeholder="Full Name"
         value={values.fullName}
-        onChange={(e) => handleChange("fullName", e.target.value)}
+        onChange={(e) => {
+          const formattedValue = e.target.value.replace(/\b\w/g, (char) =>
+            char.toUpperCase(),
+          );
+          handleChange("fullName", formattedValue);
+        }}
         className="w-full mb-3 p-2 border rounded"
         required
       />
@@ -995,7 +1008,9 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       />
 
       {/* Address Section */}
-      <h3 className="text-lg font-semibold mt-6 mb-2">Address <span className="text-red-500">*</span></h3>
+      <h3 className="text-lg font-semibold mt-6 mb-2">
+        Address <span className="text-red-500">*</span>
+      </h3>
       <div className="flex flex-wrap gap-[25px] gap-y-[20px] justify-between">
         {/* Province + District */}
         <div className="flex flex-wrap gap-[30px] gap-y-[15px] justify-between">
@@ -1005,7 +1020,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
             onChange={(e) => {
               handleChange("province", e.target.value);
             }}
-            className="text-[16px] text-[#fff] py-2 px-3 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            className="text-[16px] text-[#fff] py-2 px-3 md:w-[273px] w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
           >
             <option className="bg-[#000000]" value="">
               Select Province
@@ -1027,7 +1042,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
             onChange={(e) => {
               handleChange("district", e.target.value);
             }}
-            className="text-[16px] text-[#fff] py-2 px-3 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            className="text-[16px] text-[#fff] py-2 px-3 md:w-[273px] w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             disabled={!values.province}
           >
             <option className="bg-[#000000]" value="">
@@ -1051,7 +1066,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
             onChange={(e) => {
               handleChange("municipality", e.target.value);
             }}
-            className="text-[16px] text-[#fff] py-2 px-3 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            className="text-[16px] text-[#fff] py-2 px-3 md:w-[273px] w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             disabled={!values.district}
           >
             <option className="bg-[#000000]" value="">
@@ -1070,7 +1085,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
           <input
             type="text"
             placeholder="Ward No / Tole / House No..."
-            className="text-[#fff] text-[14px] pl-[10px] py-2 w-[273px] bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            className="text-[#fff] text-[14px] pl-[10px] py-2 md:w-[273px] w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             value={values.tole}
             onChange={(e) => {
               handleChange("tole", e.target.value);
@@ -1086,7 +1101,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
 
       {Object.entries(areasOfExpertise).map(([category, items]) => (
         <div key={category} className="mb-4">
-          <h4 className="font-semibold text-blue-700">{category}</h4>
+          <h4 className="font-semibold text-[#fa6b0c]">{category}</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
             {items.map((item) => (
               <label key={item} className="flex items-center gap-2 text-sm">
@@ -1101,9 +1116,65 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
           </div>
         </div>
       ))}
+      <label>Experience:</label>
 
-      {errors && <p className="text-red-600 mb-3">{errors}</p>}
+      <div>
+        <label className="flex gap-[10px]">
+          <input
+            type="radio"
+            name="experience"
+            value="skilled"
+            onChange={(e) => setExperience(e.target.value)}
+            required
+          />
+          Skilled
+        </label>
+      </div>
 
+      <div>
+        <label className="flex gap-[10px]">
+          <input
+            type="radio"
+            name="experience"
+            value="intern"
+            onChange={(e) => setExperience(e.target.value)}
+            required
+          />
+          Intern
+        </label>
+
+        {experience === "intern" && (
+          <div className="mt-2">
+            <label>Select Institution:</label>
+            <select
+              className="border p-1 ml-2"
+              value={institution}
+              onChange={(e) => setInstitution(e.target.value)}
+              required={experience === "intern"}  // ✅ key line
+            >
+              <option className="bg-[#000000]" value="">Select institution</option>
+              <option className="bg-[#000000]" value="college">College</option>
+              <option className="bg-[#000000]" value="university">University</option>
+              <option className="bg-[#000000]" value="company">Company</option>
+            </select>
+          </div>
+        )}
+      </div>
+      <br />
+     {errors && <p className="text-red-600 mb-3">{errors}</p>}
+      <div className="flex flex-col gap-y-[20px]">
+        <label className="font-semibold text-[#fa6b0c]" htmlFor="">
+          Extra skills Not in the list but you have :
+        </label>
+        <textarea
+          placeholder="Your Skills here..."
+          className="text-[#fff] text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+          value={values.extraSkills}
+          onChange={(e) => {
+            handleChange("extraSkills", e.target.value);
+          }}
+        />
+      </div>
       <button
         type="submit"
         className="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 w-full mt-4"
