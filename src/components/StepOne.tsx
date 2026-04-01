@@ -10,6 +10,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
   const [errors, setErrors] = useState("");
   const [experience, setExperience] = useState("");
   const [institution, setInstitution] = useState("");
+  const [engaged, setEngaged] = useState("");
 
   const areasOfExpertise = {
     "IT Technicians": [
@@ -62,9 +63,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       "Trainer",
       "Master of Ceremony",
     ],
-    "Health and Hygiene": ["Cleaner"],
-
-    Recommended: ["Intern"],
+    "Health and Hygiene": ["Cleaner"]
   };
 
   const provinces = [
@@ -1116,25 +1115,11 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
           </div>
         </div>
       ))}
-      <label>Experience:</label>
-
+      <label className="font-semibold text-[#fa6b0c]">Experience:</label>
       <div>
         <label className="flex gap-[10px]">
           <input
-            type="radio"
-            name="experience"
-            value="skilled"
-            onChange={(e) => setExperience(e.target.value)}
-            required
-          />
-          Skilled
-        </label>
-      </div>
-
-      <div>
-        <label className="flex gap-[10px]">
-          <input
-            type="radio"
+            type="checkbox"
             name="experience"
             value="intern"
             onChange={(e) => setExperience(e.target.value)}
@@ -1150,7 +1135,7 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
               className="border p-1 ml-2"
               value={institution}
               onChange={(e) => setInstitution(e.target.value)}
-              required={experience === "intern"}  // ✅ key line
+              required={experience === "intern"}
             >
               <option className="bg-[#000000]" value="">Select institution/ Organization</option>
               <option className="bg-[#000000]" value="college">Nepal Banepa Polytechnic Institute</option>
@@ -1161,6 +1146,63 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
         )}
       </div>
       <br />
+      <div className="flex flex-col gap-y-[20px]">
+      <label className="font-semibold text-[#fa6b0c]">
+        Are you engaged from any Institute/ Organization?
+      </label>
+
+      {/* YES / NO */}
+      <div className="flex gap-[20px]">
+        <label className="flex gap-[8px] text-white">
+          <input
+            type="radio"
+            name="engaged"
+            value="yes"
+            onChange={(e) => setEngaged(e.target.value)}
+          />
+          Yes
+        </label>
+
+        <label className="flex gap-[8px] text-white">
+          <input
+            type="radio"
+            name="engaged"
+            value="no"
+            onChange={(e) => setEngaged(e.target.value)}
+          />
+          No
+        </label>
+      </div>
+
+      {/* 👇 Show only if YES */}
+      {engaged === "yes" && (
+        <div className="flex flex-col gap-y-[10px]">
+          
+          {/* Dropdown */}
+          <select
+            className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            value={values.institute || ""}
+            onChange={(e) => handleChange("institute", e.target.value)}
+          >
+              <option className="bg-[#000000]" value="">Select institution/ Organization</option>
+              <option className="bg-[#000000]" value="college">Nepal Banepa Polytechnic Institute</option>
+              <option className="bg-[#000000]" value="university">Aabhash SACCOS</option>
+              <option className="bg-[#000000]" value="company">Gramin Bikash Multipurpose SACCOS</option>
+          </select>
+
+          {/* Other input */}
+          <input
+            type="text"
+            placeholder="Or write your institute name"
+            className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+            value={values.extraSkills}
+            onChange={(e) =>
+              handleChange("extraSkills", e.target.value)
+            }
+          />
+        </div>
+      )}
+    </div>
      {errors && <p className="text-red-600 mb-3">{errors}</p>}
       <div className="flex flex-col gap-y-[20px]">
         <label className="font-semibold text-[#fa6b0c]" htmlFor="">
