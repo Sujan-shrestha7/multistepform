@@ -1145,17 +1145,17 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
 
         {experience === "intern" && (
           <div className="mt-2">
-            <label>Select Institution:</label>
+            <label>Select Institution/ Organization:</label>
             <select
               className="border p-1 ml-2"
               value={institution}
               onChange={(e) => setInstitution(e.target.value)}
               required={experience === "intern"}  // ✅ key line
             >
-              <option className="bg-[#000000]" value="">Select institution</option>
-              <option className="bg-[#000000]" value="college">College</option>
-              <option className="bg-[#000000]" value="university">University</option>
-              <option className="bg-[#000000]" value="company">Company</option>
+              <option className="bg-[#000000]" value="">Select institution/ Organization</option>
+              <option className="bg-[#000000]" value="college">Nepal Banepa Polytechnic Institute</option>
+              <option className="bg-[#000000]" value="university">Aabhash SACCOS</option>
+              <option className="bg-[#000000]" value="company">Gramin Bikash Multipurpose SACCOS</option>
             </select>
           </div>
         )}
