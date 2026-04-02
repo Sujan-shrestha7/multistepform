@@ -5,7 +5,6 @@ interface StepProps {
   values: any;
   handleSubmit: () => void;
 }
-
 const StepFour: React.FC<StepProps> = ({ prevStep, values, handleSubmit }) => {
   return (
     <div className="w-full max-w-3xl mx-auto p-4 sm:p-6">
@@ -107,6 +106,18 @@ const StepFour: React.FC<StepProps> = ({ prevStep, values, handleSubmit }) => {
               </td>
             </tr>
 
+            <tr>
+              <strong>
+                <td className="pr-2 ">Experience:</td>
+              </strong>
+              <td>{values.experience}</td>
+            </tr>
+            <tr>
+              <strong>
+                <td className="pr-2 ">Institute/Organization:</td>
+              </strong>
+              <td>{values.institute}</td>
+            </tr>
             <tr>
               <strong>
                 <td className="pr-2 ">Extra Skills:</td>

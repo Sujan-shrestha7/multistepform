@@ -22,6 +22,8 @@ const MultiStepForm: React.FC = () => {
     accountType:"",
     expertise: [],
     extraSkills: "",
+    experience:"",
+    institute:"",
 
     // Step 2: Identity Info
     citizenshipFront: null as File | null,
@@ -64,6 +66,8 @@ const handleSubmit = async() => {
       formDataToSend.append("Gears", "...");
       formDataToSend.append("panNo", formData.panNo);
       formDataToSend.append("extraSkills", formData.extraSkills);
+      formDataToSend.append("experience", formData.experience);
+      formDataToSend.append("institute",formData.institute)
 
 
       // Handle array for expertise
@@ -180,6 +184,8 @@ const handleSubmit = async() => {
         accountType: "",
         expertise: [],
         extraSkills:"",
+        experience:"",
+        institute:"",
 
         citizenshipFront: null,
         citizenshipBack: null,

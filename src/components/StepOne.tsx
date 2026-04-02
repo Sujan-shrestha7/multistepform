@@ -8,7 +8,7 @@ interface StepProps {
 
 const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
   const [errors, setErrors] = useState("");
-  const [experience, setExperience] = useState(false);
+  // const [experience, setExperience] = useState(false);
   const [engaged, setEngaged] = useState("");
 
   const areasOfExpertise = {
@@ -1116,52 +1116,53 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
       ))}
       <label className="font-semibold text-[#fa6b0c]">Experience:</label>
       <div>
-      <label className="flex gap-[10px]">
-        <input
-          type="checkbox"
-          name="experience"
-          checked={experience}
-          onChange={(e) => setExperience(e.target.checked)}
-        />
-        Intern
-      </label>
-
-      {/* ✅ Show only when checked */}
-      {experience && (
-        <div className="flex flex-col gap-y-[10px] mt-2">
-          {/* Dropdown */}
-          <select
-            className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
-            value={values.institute || ""}
-            onChange={(e) => handleChange("institute", e.target.value)}
-          >
-            <option className="bg-[#000000]" value="">
-              Select institution/ Organization
-            </option>
-            <option className="bg-[#000000]" value="college">
-              Nepal Banepa Polytechnic Institute
-            </option>
-            <option className="bg-[#000000]" value="saccos1">
-              Aabhash SACCOS
-            </option>
-            <option className="bg-[#000000]" value="saccos2">
-              Gramin Bikash Multipurpose SACCOS
-            </option>
-          </select>
-
-          {/* Other input */}
+        <label className="flex gap-[10px]">
           <input
-            type="text"
-            placeholder="Or write your institute name"
-            className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
-            value={values.extraSkills}
+            type="checkbox"
+            name="experience"
+            value="intern"
+            checked={values.experience === "intern"}
             onChange={(e) =>
-              handleChange("extraSkills", e.target.value)
+              handleChange("experience", e.target.checked ? e.target.value : "")
             }
           />
-        </div>
-      )}
-    </div>
+          Intern
+        </label>
+
+        {/* ✅ Show only when checked */}
+        {values.experience === "intern" && (
+          <div className="flex flex-col gap-y-[10px] mt-2">
+            {/* Dropdown */}
+            <select
+              className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              value={values.institute || ""}
+              onChange={(e) => handleChange("institute", e.target.value)}
+            >
+              <option className="bg-[#000000]" value="">
+                Select institution/ Organization
+              </option>
+              <option className="bg-[#000000]" value="Nepal Banepa Polytechnic Institute">
+                Nepal Banepa Polytechnic Institute
+              </option>
+              <option className="bg-[#000000]" value="Aabhash SACCOS">
+                Aabhash SACCOS
+              </option>
+              <option className="bg-[#000000]" value="Gramin Bikash Multipurpose SACCOS">
+                Gramin Bikash Multipurpose SACCOS
+              </option>
+            </select>
+
+            {/* Other input */}
+            <input
+              type="text"
+              placeholder="Or write your institute name"
+              className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+              value={values.institute || ""}
+              onChange={(e) => handleChange("institute", e.target.value)}
+            />
+          </div>
+        )}
+      </div>
       <br />
       <div className="flex flex-col gap-y-[20px]">
         <label className="font-semibold text-[#fa6b0c]">
@@ -1225,8 +1226,8 @@ const StepOne: React.FC<StepProps> = ({ nextStep, handleChange, values }) => {
               type="text"
               placeholder="Or write your institute name"
               className="text-white text-[14px] pl-[10px] py-2 w-full bg-transparent border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
-              value={values.extraSkills}
-              onChange={(e) => handleChange("extraSkills", e.target.value)}
+              value={values.institute || ""}
+              onChange={(e) => handleChange("institute", e.target.value)}
             />
           </div>
         )}
